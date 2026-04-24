@@ -27,14 +27,9 @@ python-mastery/
 │
 ├── 01_core_basics/
 ├── 02_control_flow/
-├── 03_data_structures/
-├── 04_functions/
-├── 05_oop/
-├── 06_error_handling/
-├── 07_file_handling/
-├── 08_modules_packages/
-├── 09_problem_solving/
-└── 10_mini_projects/
+├── 03_data_structure
+├── 04_problem_solving/
+└── 05_mini_projects/
 ```
 
 
@@ -101,36 +96,6 @@ Covers foundational concepts:
 - Magic Methods
 
 ✔ Focus: Real-world programming structure.
-
----
-
-## ⚠ 06 – Error Handling
-
-- Try / Except
-- Custom Exceptions
-- Assertions
-
-✔ Focus: Writing robust and fault-tolerant code.
-
----
-
-## 📁 07 – File Handling
-
-- Reading & Writing Files
-- Working with JSON
-- Working with CSV
-
-✔ Focus: Handling real-world data.
-
----
-
-## 📦 08 – Modules & Packages
-
-- Importing Modules
-- Creating Modules
-- Virtual Environment Introduction
-
-✔ Focus: Understanding project structure & scalability.
 
 ---
 
