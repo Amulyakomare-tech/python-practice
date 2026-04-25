@@ -27,7 +27,7 @@ python-mastery/
 │
 ├── 01_core_basics/
 ├── 02_control_flow/
-├── 03_data_structure
+├── 03_data_structure/
 ├── 04_problem_solving/
 └── 05_mini_projects/
 ```
