@@ -1,0 +1,164 @@
+import json
+import os
+from datetime import datetime
+
+FILE_NAME = "expenses.json"
+
+
+# -------------------------------------------------
+# Load expenses from JSON file
+# -------------------------------------------------
+def load_expenses():
+    """
+    Reads expense data from JSON file.
+    If file does not exist, creates an empty file.
+    """
+    if not os.path.exists(FILE_NAME):
+        with open(FILE_NAME, "w") as file:
+            json.dump([], file)
+
+    with open(FILE_NAME, "r") as file:
+        return json.load(file)
+
+
+# -------------------------------------------------
+# Save expenses to JSON file
+# -------------------------------------------------
+def save_expenses(expenses):
+    """
+    Saves expense list to JSON file.
+    """
+    with open(FILE_NAME, "w") as file:
+        json.dump(expenses, file, indent=4)
+
+
+# -------------------------------------------------
+# Add a new expense
+# -------------------------------------------------
+def add_expense(expenses):
+    """
+    Takes user input and adds a new expense.
+    """
+    amount = float(input("Enter amount: ₹"))
+    category = input("Enter category (Food/Travel/Study/etc): ").title()
+    description = input("Enter description: ")
+
+    expense = {
+        "amount": amount,
+        "category": category,
+        "description": description,
+        "date": datetime.now().strftime("%Y-%m-%d")
+    }
+
+    expenses.append(expense)
+    save_expenses(expenses)
+
+    print("✅ Expense added successfully!")
+
+
+# -------------------------------------------------
+# View all expenses
+# -------------------------------------------------
+def view_expenses(expenses):
+    """
+    Displays all stored expenses.
+    """
+    if not expenses:
+        print("No expenses found.")
+        return
+
+    print("\n----- All Expenses -----")
+    for index, expense in enumerate(expenses, start=1):
+        print(
+            f"{index}. ₹{expense['amount']} | "
+            f"{expense['category']} | "
+            f"{expense['date']} | "
+            f"{expense['description']}"
+        )
+
+
+# -------------------------------------------------
+# Monthly expense summary
+# -------------------------------------------------
+def monthly_summary(expenses):
+    """
+    Shows total expense and highest spending category for a given month.
+    """
+    month = input("Enter month (YYYY-MM): ")
+
+    monthly_expenses = [
+        expense for expense in expenses
+        if expense["date"].startswith(month)
+    ]
+
+    if not monthly_expenses:
+        print("No expenses found for this month.")
+        return
+
+    total_amount = sum(expense["amount"] for expense in monthly_expenses)
+    print(f"\n📅 Total expense for {month}: ₹{total_amount}")
+
+    category_totals = {}
+    for expense in monthly_expenses:
+        category = expense["category"]
+        category_totals[category] = category_totals.get(category, 0) + expense["amount"]
+
+    highest_category = max(category_totals, key=category_totals.get)
+    print(
+        f"💸 Highest spending category: "
+        f"{highest_category} (₹{category_totals[highest_category]})"
+    )
+
+
+# -------------------------------------------------
+# Category-wise expense summary
+# -------------------------------------------------
+def category_summary(expenses):
+    """
+    Shows total expense for a selected category.
+    """
+    category = input("Enter category name: ").title()
+
+    total = sum(
+        expense["amount"]
+        for expense in expenses
+        if expense["category"] == category
+    )
+
+    print(f"📊 Total expense for {category}: ₹{total}")
+
+
+# -------------------------------------------------
+# Main program
+# -------------------------------------------------
+def main():
+    expenses = load_expenses()
+
+    while True:
+        print("\n====== EXPENSE TRACKER ======")
+        print("1. Add Expense")
+        print("2. View All Expenses")
+        print("3. Monthly Summary")
+        print("4. Category Wise Summary")
+        print("5. Exit")
+
+        choice = input("Choose option (1-5): ")
+
+        if choice == "1":
+            add_expense(expenses)
+        elif choice == "2":
+            view_expenses(expenses)
+        elif choice == "3":
+            monthly_summary(expenses)
+        elif choice == "4":
+            category_summary(expenses)
+        elif choice == "5":
+            print("👋 Thank you for using Expense Tracker!")
+            break
+        else:
+            print("❌ Invalid choice. Please try again.")
+
+
+# Program execution starts here
+if __name__ == "__main__":
+main()
