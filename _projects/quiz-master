@@ -1,0 +1,136 @@
+import random
+import time
+
+# -----------------------------
+# Question Database
+# -----------------------------
+QUESTIONS = [
+    {
+        "question": "What does HTTP stand for?",
+        "options": [
+            "HyperText Transfer Protocol",
+            "High Transfer Text Protocol",
+            "Hyper Transfer Text Process",
+            "Home Tool Transfer Protocol"
+        ],
+        "answer": 0,
+        "difficulty": "easy"
+    },
+    {
+        "question": "Which data structure follows FIFO?",
+        "options": ["Stack", "Queue", "Tree", "Graph"],
+        "answer": 1,
+        "difficulty": "easy"
+    },
+    {
+        "question": "Which keyword is used to create a generator in Python?",
+        "options": ["return", "yield", "gen", "async"],
+        "answer": 1,
+        "difficulty": "medium"
+    },
+    {
+        "question": "Which sorting algorithm has O(n log n) average time complexity?",
+        "options": ["Bubble Sort", "Insertion Sort", "Merge Sort", "Selection Sort"],
+        "answer": 2,
+        "difficulty": "medium"
+    },
+    {
+        "question": "What is Python GIL?",
+        "options": [
+            "Garbage Index List",
+            "Global Interpreter Lock",
+            "General Instruction Language",
+            "Graph Interface Layer"
+        ],
+        "answer": 1,
+        "difficulty": "hard"
+    }
+]
+
+# -----------------------------
+# Utility Functions
+# -----------------------------
+def countdown(seconds):
+    for i in range(seconds, 0, -1):
+        print(f"⏳ Time left: {i}s", end="\r")
+        time.sleep(1)
+    print()
+
+def get_questions(level):
+    filtered = [q for q in QUESTIONS if q["difficulty"] == level]
+    random.shuffle(filtered)
+    return filtered
+
+# -----------------------------
+# Quiz Logic
+# -----------------------------
+def run_quiz(questions):
+    score = 0
+
+    for index, q in enumerate(questions, start=1):
+        print(f"\nQ{index}. {q['question']}")
+        for i, option in enumerate(q["options"], start=1):
+            print(f"{i}. {option}")
+
+        countdown(5)
+
+        try:
+            user_answer = int(input("Your answer (1-4): ")) - 1
+        except ValueError:
+            print("❌ Invalid input")
+            continue
+
+        if user_answer == q["answer"]:
+            print("✅ Correct!")
+            score += 1
+        else:
+            correct_option = q["options"][q["answer"]]
+            print(f"❌ Wrong! Correct answer: {correct_option}")
+
+    return score
+
+# -----------------------------
+# Main Program
+# -----------------------------
+def main():
+    print("🎯 SMART PYTHON QUIZ APPLICATION")
+    print("--------------------------------")
+    print("Select Difficulty Level:")
+    print("1. Easy")
+    print("2. Medium")
+    print("3. Hard")
+
+    level_map = {"1": "easy", "2": "medium", "3": "hard"}
+    choice = input("Enter choice (1-3): ")
+
+    if choice not in level_map:
+        print("❌ Invalid choice")
+        return
+
+    questions = get_questions(level_map[choice])
+
+    if not questions:
+        print("No questions available.")
+        return
+
+    score = run_quiz(questions)
+    total = len(questions)
+    accuracy = (score / total) * 100
+
+    print("\n📊 QUIZ SUMMARY")
+    print("--------------------------------")
+    print(f"Score      : {score} / {total}")
+    print(f"Accuracy   : {accuracy:.2f}%")
+
+    if accuracy >= 80:
+        print("🌟 Excellent Performance")
+    elif accuracy >= 50:
+        print("👍 Good Job")
+    else:
+        print("📘 Keep Practicing")
+
+# -----------------------------
+# Entry Point
+# -----------------------------
+if __name__ == "__main__":
+    main()
