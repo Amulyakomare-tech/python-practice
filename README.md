@@ -33,9 +33,8 @@ Covers fundamental Python topics such as:
 * Variables & Data Types
 * Operators & Type Casting
 * Input / Output
-* Conditional Statements
 * Loops
-* Strings & Lists
+* tuples & Lists
 * Functions
 
 ---
