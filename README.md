@@ -32,7 +32,7 @@ Covers fundamental Python topics such as:
 
 * Variables & Data Types
 * Operators & Type Casting
-* Input / Output
+* Input 
 * Loops
 * tuples & Lists
 * Functions
